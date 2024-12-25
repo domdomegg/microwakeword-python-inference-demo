@@ -9,7 +9,7 @@ By default, it'll automatically download the 'Okay Nabu' model. You can download
 ## Quick start
 
 1. Clone this repository
-2. Run `python setup.py`
+2. Run `source ./script/setup`
 3. Start the script:
    - In live mode (uses your microphone, requires sox): `python script.py`
    - In file mode: `python script.py sample.wav` (files must be 16kHz mono WAV format)

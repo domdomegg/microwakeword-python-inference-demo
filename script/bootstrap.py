@@ -16,13 +16,12 @@ def run_command(cmd, check=True):
 
 def create_venv():
     """Create a virtual environment."""
-    print("Creating virtual environment...")
     venv_dir = Path(".venv")
     if venv_dir.exists():
-        print("Removing existing virtual environment...")
-        import shutil
-        shutil.rmtree(venv_dir)
+        print("Virtual environment already exists, skipping creation...")
+        return
     
+    print("Creating virtual environment...")
     builder = venv.EnvBuilder(with_pip=True)
     builder.create(".venv")
     
@@ -45,7 +44,6 @@ def install_dependencies():
 
 def download_model():
     """Download the TFLite model if no model exists."""
-    # Check for existing .tflite files
     tflite_files = list(Path(".").glob("*.tflite"))
     if tflite_files:
         print(f"Found existing model: {tflite_files[0]}")

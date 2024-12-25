@@ -17,8 +17,7 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     
-    - name: Install dependencies
-      run: python setup.py
-        
-    - name: Run test with sample audio
-      run: python script.py sample.wav
+    - name: Setup and run test
+      run: |
+        source ./script/setup
+        python script.py sample.wav
