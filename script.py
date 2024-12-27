@@ -4,6 +4,7 @@ import os
 import subprocess
 import tempfile
 import time
+import urllib.request
 import wave
 import numpy as np
 import tensorflow as tf
@@ -114,6 +115,12 @@ def process_file(interpreter: tf.lite.Interpreter, filename: str) -> None:
     print(f"Average prediction: {avg_pred:.4f}")
     print(f"Wake word {'detected' if max_pred > 0.5 else 'not detected'}")
 
+def download_default_model(model_name: str) -> None:
+    print(f"Downloading default model {model_name}...")
+    url = "https://github.com/esphome/micro-wake-word-models/raw/refs/heads/main/models/v2/okay_nabu.tflite"
+    urllib.request.urlretrieve(url, model_name)
+    print("Download complete")
+
 def load_model(model_path: str) -> tf.lite.Interpreter:
     interpreter = tf.lite.Interpreter(model_path=model_path)
     interpreter.allocate_tensors()
@@ -126,6 +133,8 @@ def main() -> None:
     args = parser.parse_args()
 
     model_path = os.path.join(os.path.dirname(__file__), args.model)
+    if args.model == 'okay_nabu.tflite' and not os.path.exists(model_path):
+        download_default_model(model_path)
     interpreter = load_model(model_path)
     
     try:
